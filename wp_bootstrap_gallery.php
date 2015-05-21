@@ -149,7 +149,7 @@ function wp_bootstrap_gallery( $content, $attr ) {
 	foreach ( $attachments as $id => $attachment ) {
 		
 		$attachment_image = wp_get_attachment_image( $id, 'full');
-		$attachment_link = wp_get_attachment_link( $id, 'full', ! ( isset( $attr['link'] ) AND 'file' == $attr['link'] ) );
+		$attachment_link = wp_get_attachment_link( $id, 'thumbnail', ! ( isset( $attr['link'] ) AND 'file' == $attr['link'] ) );
 		
 		$output .= "<div class='col-sm-" . $span_array[$attachment_count] . "'>";
 		$output .= $attachment_link . "\n";
