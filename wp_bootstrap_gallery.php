@@ -21,16 +21,16 @@ function wp_bootstrap_gallery( $content, $attr ) {
 	}
 
 	extract( shortcode_atts( array(
-		'order'			=>	'ASC',
-		'orderby'		=>	'menu_order ID',
-		'id'			=>	$post->ID,
-		'itemtag'		=>	'figure',
-		'icontag'		=>	'div',
+		'order'		=>	'ASC',
+		'orderby'	=>	'menu_order ID',
+		'id'		=>	$post->ID,
+		'itemtag'	=>	'figure',
+		'icontag'	=>	'div',
 		'captiontag'	=>	'figcaption',
-		'columns'		=>	3,
-		'size'			=>	'thumbnail',
-		'include'		=>	'',
-		'exclude'		=>	''
+		'columns'	=>	3,
+		'size'		=>	'thumbnail',
+		'include'	=>	'',
+		'exclude'	=>	''
 	), $attr ) );
 
 	$id = intval( $id );
@@ -44,12 +44,12 @@ function wp_bootstrap_gallery( $content, $attr ) {
 		$include = preg_replace( '/[^0-9,]+/', '', $include );
 		
 		$_attachments = get_posts( array(
-			'include'			=>	$include,
+			'include'		=>	$include,
 			'post_status'		=>	'inherit',
-			'post_type'			=>	'attachment',
+			'post_type'		=>	'attachment',
 			'post_mime_type'	=>	'image',
-			'order'				=>	$order,
-			'orderby'			=>	$orderby
+			'order'			=>	$order,
+			'orderby'		=>	$orderby
 		) );
 
 		$attachments = array();
@@ -64,12 +64,12 @@ function wp_bootstrap_gallery( $content, $attr ) {
 		
 		$attachments = get_children( array(
 			'post_parent'		=>	$id,
-			'exclude'			=>	$exclude,
+			'exclude'		=>	$exclude,
 			'post_status'		=>	'inherit',
-			'post_type'			=>	'attachment',
+			'post_type'		=>	'attachment',
 			'post_mime_type'	=>	'image',
-			'order'				=>	$order,
-			'orderby'			=>	$orderby
+			'order'			=>	$order,
+			'orderby'		=>	$orderby
 		) );
 
 	} else {
@@ -77,10 +77,10 @@ function wp_bootstrap_gallery( $content, $attr ) {
 		$attachments = get_children( array(
 			'post_parent'		=>	$id,
 			'post_status'		=>	'inherit',
-			'post_type'			=>	'attachment',
+			'post_type'		=>	'attachment',
 			'post_mime_type'	=>	'image',
-			'order'				=>	$order,
-			'orderby'			=>	$orderby
+			'order'			=>	$order,
+			'orderby'		=>	$orderby
 		) );
 
 	}
@@ -151,7 +151,7 @@ function wp_bootstrap_gallery( $content, $attr ) {
 		$attachment_image = wp_get_attachment_image( $id, 'full');
 		$attachment_link = wp_get_attachment_link( $id, 'full', ! ( isset( $attr['link'] ) AND 'file' == $attr['link'] ) );
 		
-		$output .= "<div class='span" . $span_array[$attachment_count] . "'>";
+		$output .= "<div class='col-sm-" . $span_array[$attachment_count] . "'>";
 		$output .= $attachment_link . "\n";
 		$output .= "</div>\n";
 
