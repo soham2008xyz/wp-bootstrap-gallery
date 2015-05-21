@@ -1,0 +1,25 @@
+{
+  "name": "wp-bootstrap-gallery",
+  "version": "3.3.4",
+  "homepage": "https://github.com/soham2008xyz/wp-bootstrap-gallery",
+  "authors": [
+    "Soham Banerjee <soham2008xyz@gmail.com>"
+  ],
+  "description": "Bootstrap 3 gallery for WordPress",
+  "main": "wp_bootstrap_gallery.php",
+  "keywords": [
+    "php",
+    "bootstrap",
+    "gallery"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+	"README.md",
+	"LICENSE.txt"
+  ]
+}
