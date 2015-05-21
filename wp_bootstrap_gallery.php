@@ -109,57 +109,43 @@ function wp_bootstrap_gallery( $content, $attr ) {
  	 * Count number of items in $attachments array, and assign a colum layout to $span_array
  	 * variable based on the mumber of images in the $attachments array
 	 */
-	$span_array = null;
-
-	switch (count($attachments)) {
+	$col = 6;
+	
+	switch ( $columns ) {
 		case 1:
-			/* One full width image */
-	        $span_array = array(12);
-	        break;
-	    case 2:
-	    	/* Two half width images */
-	        $span_array = array(6,6);
-	        break;
-	    case 3:
-	    	/* One 3/4 width image with two 1/4 width images to the right */
-	        $span_array = array(8,4,4);
-	        break;
-	    case 4:
-	    	/* One full width image with three 1/3 width images underneath */
-	    	$span_array = array(12,4,4,4);
-	        break;
-	    case 5:
-	    	/* Two half width images with fout 1/4 width images underneath */
-	    	$span_array = array(6,6,4,4,4);
-	        break;
-	    case 6:
-	    	/* One 2/3 width image with two 1/3 width images to the right,
-	    	 * and three 1/3 width images underneath */
-	    	$span_array = array(8,4,4,4,4,4);
-	        break;
-	    default:
-	    	/* One full width image with two 1/2 width images underneath
-	    	 * All remaining images 1/3 width underneath */
-	    	$span_array = array(12,6,6,4);
-	        break;
+			$col = 12;
+			break;
+		case 2:
+			$col = 6;
+			break;
+		case 3:
+			$col = 4;
+			break;
+		case 4:
+			$col = 3;
+			break;
+		case 5:
+			$col = 2;
+			break;
+		default:
+			$col = 4;
+			break;
 	}
 
-	$attachment_count = 0;
-
 	foreach ( $attachments as $id => $attachment ) {
+		$title = $attachment->post_excerpt;
 		
 		$attachment_image = wp_get_attachment_image( $id, 'full');
-		$attachment_link = wp_get_attachment_link( $id, 'thumbnail', ! ( isset( $attr['link'] ) AND 'file' == $attr['link'] ) );
+		$attachment_link = wp_get_attachment_link( $id, 'full', ! ( isset( $attr['link'] ) AND 'file' == $attr['link'] ) );
+		$attachment_full_atts = wp_get_attachment_image_src ( $id, 'full' );
+		$attachment_full_url = $attachment_full_atts[0];
+		$attachment_thumb_atts = wp_get_attachment_image_src ( $id, 'medium' );
+		$attachment_thumb_url = $attachment_thumb_atts[0];
 		
-		$output .= "<div class='col-sm-" . $span_array[$attachment_count] . "'>";
-		$output .= $attachment_link . "\n";
-		$output .= "</div>\n";
-
-		if(count($attachments) >= 7 && $attachment_count == 3){
-			$attachment_count = 3;
-		} else {
-			$attachment_count++;
-		}
+		$output .= "<div class='col-sm-" . $col . "'>";
+		$output .= "<a class='thumbnail' data-lightbox='{$selector}' href='{$attachment_full_url}' data-title='{$title}'>\n";
+		$output .= "<img class='img-responsive' alt='{$title}' src='{$attachment_thumb_url}'>\n";
+		$output .= "</a>\n</div>\n";
 	}
 	
 	$output .= "</div>\n";
