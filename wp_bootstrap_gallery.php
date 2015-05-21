@@ -128,7 +128,7 @@ function wp_bootstrap_gallery( $content, $attr ) {
 			$col = 2;
 			break;
 		default:
-			$col = 4;
+			$col = 3;
 			break;
 	}
 
