@@ -98,19 +98,18 @@ function wp_bootstrap_gallery( $content, $attr ) {
 
 	$itemtag	=	tag_escape( $itemtag );
 	$captiontag	=	tag_escape( $captiontag );
-	$columns	=	intval( min( array( 8, $columns ) ) );
+	$columns	=	intval( min( array( 6, $columns ) ) );
 	$float		=	(is_rtl()) ? 'right' : 'left';
 	
 	$selector	=	"gallery-{$instance}";
 	$size_class	=	sanitize_html_class( $size );
-	$output		=	"<div class='row' id='$selector'>";
+	$output		=	"<div class='row' id='$selector'><div class='col-xs-12'>";
 
 	/**
  	 * Count number of items in $attachments array, and assign a colum layout to $span_array
  	 * variable based on the mumber of images in the $attachments array
 	 */
 	$col = 6;
-	
 	switch ( $columns ) {
 		case 1:
 			$col = 12;
@@ -124,7 +123,7 @@ function wp_bootstrap_gallery( $content, $attr ) {
 		case 4:
 			$col = 3;
 			break;
-		case 5:
+		case 6:
 			$col = 2;
 			break;
 		default:
@@ -132,6 +131,7 @@ function wp_bootstrap_gallery( $content, $attr ) {
 			break;
 	}
 
+	$count = 0;
 	foreach ( $attachments as $id => $attachment ) {
 		$title = $attachment->post_excerpt;
 		
@@ -142,13 +142,16 @@ function wp_bootstrap_gallery( $content, $attr ) {
 		$attachment_thumb_atts = wp_get_attachment_image_src ( $id, 'medium' );
 		$attachment_thumb_url = $attachment_thumb_atts[0];
 		
+		$output .= (($count % (12/$col))==0) && ($count != 0) ? "</div>" : "";
+		$output .= (($count % (12/$col))==0) && ($count != count($attachments)) ? "<div class='row'>" : "";
 		$output .= "<div class='col-sm-" . $col . "'>";
 		$output .= "<a class='thumbnail' data-lightbox='{$selector}' href='{$attachment_full_url}' data-title='{$title}'>\n";
 		$output .= "<img class='img-responsive' alt='{$title}' src='{$attachment_thumb_url}'>\n";
 		$output .= "</a>\n</div>\n";
+		$count++;
 	}
 	
-	$output .= "</div>\n";
+	$output .= "</div></div>\n";
 	
 	return $output;
 }
